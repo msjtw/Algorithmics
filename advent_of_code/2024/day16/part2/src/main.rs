@@ -3,6 +3,7 @@ use std::io;
 
 fn main() {
     let mut mmap: [[char; 150]; 150] = [['#'; 150]; 150];
+    let mut dist: [[i32; 150]; 150] = [[100000000; 150]; 150];
     let mut s_x: usize = 0;
     let mut s_y: usize = 0;
     let mut n = String::new();
@@ -34,11 +35,16 @@ fn main() {
     while !q.is_empty() {
         let ((mut hist, dir), mut d) = q.pop().unwrap();
         let (x, y) = hist.pop().unwrap();
+        d *= -1;
+        if dist[y][x] < d && (d - dist[y][x]).abs() != 1000 {
+            println!("{x} {y} | {} < {}", dist[y][x], d);
+            continue;
+        }
+        dist[y][x] = d;
         if mmap[y][x] == 'E' {
             res_vec.push(hist.clone());
             break;
         }
-        d *= -1;
         for m_dir in dirs {
             let (dx, dy) = m_dir;
             if mmap[(y as i32 + dy) as usize][(x as i32 + dx) as usize] == '#' {
@@ -52,11 +58,6 @@ fn main() {
             let mut new_h = hist.clone();
             let mut add = vec![(x, y), new_move.0];
             new_h.append(&mut add);
-
-            if hist.len() > 0 && hist[(hist.len() as i32 - 1) as usize] == (x, y) {
-                print!("co");
-                continue;
-            }
             if dir == m_dir {
                 q.push((new_h, new_move.1), -1 * (d + 1));
             } else {
@@ -64,5 +65,13 @@ fn main() {
             }
         }
     }
+
+    for i in 0..n {
+        for k in 0..n {
+            print!("{:9} ", dist[i][k].to_string());
+        }
+        println!();
+    }
+
     println!("{}", res_vec.len())
 }

@@ -16,8 +16,13 @@ fn main() {
     instructions = instructions.trim().to_string();
     let instr_vec: Vec<&str> = instructions.split(" ").collect();
 
-    let mut reg: i128 = 798255690383360;
+    let beg: i128 = (1_i128 << (15 * 3)) + 16 * 8 * 8 * 8 * 8 * 8;
+    println!("{beg}");
+    let mut reg: i128 = beg;
     loop {
+        if reg - beg > 10000000000 {
+            break;
+        }
         reg_a = reg;
         let mut res = String::new();
         let mut i: i128 = 0;
@@ -50,7 +55,9 @@ fn main() {
                     } % 8;
                 }
                 3 => {
+                    // println!("{reg_a}");
                     if reg_a != 0 {
+                        // println!("jump");
                         i = operand - 2;
                     }
                 }
@@ -93,15 +100,15 @@ fn main() {
                 i32::MIN..=-1_i32 | 8_i32..=i32::MAX => todo!(),
             }
             i += 2;
-            if res.len() > instructions.len() {
-                break;
-            }
         }
         if reg % 100000 == 0 {
-            println!("{res}");
+            // println!(
+            //     "{} %",
+            //     ((i as f64 - beg as f64) / (281474976710655.0 - beg as f64)) * 100.0
+            // );
         }
         // res.pop();
-        // println!("{res}");
-        reg += 1;
+        println!("{res}");
+        reg += 16 * 8 * 8 * 8 * 8;
     }
 }
