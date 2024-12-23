@@ -16,13 +16,12 @@ fn main() {
     instructions = instructions.trim().to_string();
     let instr_vec: Vec<&str> = instructions.split(" ").collect();
 
-    let beg: i128 = (1_i128 << (15 * 3)) + 16 * 8 * 8 * 8 * 8 * 8;
-    println!("{beg}");
+    let beg: i128 = 1_i128 << (15 * 3);
+    let mut increment: i128 = 1;
+    let mut digit = 0;
     let mut reg: i128 = beg;
+    println!("{beg}, {reg}");
     loop {
-        if reg - beg > 10000000000 {
-            break;
-        }
         reg_a = reg;
         let mut res = String::new();
         let mut i: i128 = 0;
@@ -39,11 +38,7 @@ fn main() {
                         6 => reg_c,
                         i128::MIN..=3_i128 | 7_i128..=i128::MAX => operand,
                     } as u32;
-                    if ppow > 30 {
-                        reg_a = 0;
-                    } else {
-                        reg_a = reg_a / 2_i128.pow(ppow);
-                    }
+                    reg_a = reg_a / 2_i128.pow(ppow);
                 }
                 1 => reg_b = reg_b ^ operand,
                 2 => {
@@ -52,23 +47,21 @@ fn main() {
                         5 => reg_b,
                         6 => reg_c,
                         i128::MIN..=3_i128 | 7_i128..=i128::MAX => operand,
-                    } % 8;
+                    } % 8_i128;
                 }
                 3 => {
-                    // println!("{reg_a}");
                     if reg_a != 0 {
-                        // println!("jump");
                         i = operand - 2;
                     }
                 }
                 4 => reg_b = reg_b ^ reg_c,
                 5 => {
-                    let tmp = match operand {
+                    let tmp: i128 = match operand {
                         4 => reg_a,
                         5 => reg_b,
                         6 => reg_c,
                         i128::MIN..=3_i128 | 7_i128..=i128::MAX => operand,
-                    } % 8;
+                    } % 8_i128;
                     res += &(tmp.to_string() + " ");
                 }
                 6 => {
@@ -78,11 +71,7 @@ fn main() {
                         6 => reg_c,
                         i128::MIN..=3_i128 | 7_i128..=i128::MAX => operand,
                     } as u32;
-                    if ppow > 30 {
-                        reg_b = 0;
-                    } else {
-                        reg_b = reg_a / 2_i128.pow(ppow);
-                    }
+                    reg_b = reg_a / 2_i128.pow(ppow);
                 }
                 7 => {
                     let ppow: u32 = match operand {
@@ -91,24 +80,34 @@ fn main() {
                         6 => reg_c,
                         i128::MIN..=3_i128 | 7_i128..=i128::MAX => operand,
                     } as u32;
-                    if ppow > 30 {
-                        reg_c = 0;
-                    } else {
-                        reg_c = reg_a / 2_i128.pow(ppow);
-                    }
+                    reg_c = reg_a / 2_i128.pow(ppow);
                 }
                 i32::MIN..=-1_i32 | 8_i32..=i32::MAX => todo!(),
             }
             i += 2;
         }
-        if reg % 100000 == 0 {
-            // println!(
-            //     "{} %",
-            //     ((i as f64 - beg as f64) / (281474976710655.0 - beg as f64)) * 100.0
-            // );
+        if &res.trim()[..2 * digit + 1] == &instructions[..2 * digit + 1] {
+            println!("set: {}, \n{}, {}, {}", res, digit, increment, reg);
+            increment <<= 3;
+            if digit == 0 {
+                increment = 1;
+            }
+            if digit == 15 {
+                break;
+            }
+            digit += 1;
         }
-        // res.pop();
-        println!("{res}");
-        reg += 16 * 8 * 8 * 8 * 8;
+
+        // let coo = &res[2 * digit..];
+        // let coo2 = &instructions[2 * digit..];
+        // println!("'{}' '{}'", coo, coo2);
+
+        // println!(
+        //     "'{}' '{}', {}",
+        //     res.chars().nth(2 * digit).unwrap().to_string(),
+        //     instr_vec[digit].trim(),
+        //     2 * digit
+        // );
+        reg += increment;
     }
 }
