@@ -14,5 +14,7 @@ int main(){
             last_1 = i;
     }
 
+    
+
     return 1;
 }
