@@ -1,4 +1,5 @@
 zz_exe/
+auto_test/bin/
 tests/
 out.out
 debug.in
