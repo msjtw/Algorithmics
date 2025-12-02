@@ -8,14 +8,16 @@
 
 
 \title{ \vspace{-1cm}
-	CP Algorithms Handbook}
+	CP Algorithms Handbook \\
+	\normalsize for the recently deceased}
+
 \author{Stanisław Fiedler}
 \date{\today}
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
-\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{backcolour}{rgb}{1,0.97,0.95}
 
 \lstdefinestyle{mystyle}{
     backgroundcolor=\color{backcolour},   
@@ -210,14 +212,23 @@ Modular inverse:
 
 \section{Geometry}
 
-\subsection{Point Location Test}\label{sub:nie_wiem_co_to_robi} % (fold)
-\lstinputlisting[language=C++, firstline=1, lastline=18]{code_snippets/point}
+\subsection{Point location}\label{sub:nie_wiem_co_to_robi} % (fold)
+\lstinputlisting[language=C++, firstline=41, lastline=47]{code_snippets/geometry}
+% subsection Nie wiem co to robi (end)
+
+\subsection{Point in polygon}\label{sub:point_in_polygon} % (fold)
+\lstinputlisting[language=C++, firstline=50, lastline=99]{code_snippets/geometry}
+% subsection Nie wiem co to robi (end)
+
+\subsection{Convex hull}\label{sub:convex_hull} % (fold)
+
+Only finds the smallest convex hull.
+Points on the hull are omitted.
+
+\lstinputlisting[language=C++, firstline=1, lastline=29]{code_snippets/geometry}
 % subsection Nie wiem co to robi (end)
 
 % section Geometry (end)
-
-\section{Other Algorithms}
-
 
 %--/Paper--
 

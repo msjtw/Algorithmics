@@ -36,5 +36,6 @@
 \contentsline {subsection}{\numberline {7.1}Fermat's Theorem}{14}{subsection.7.1}%
 \contentsline {subsection}{\numberline {7.2}Fast Fibonacci}{14}{subsection.7.2}%
 \contentsline {section}{\numberline {8}Geometry}{15}{section.8}%
-\contentsline {subsection}{\numberline {8.1}Point Location Test}{15}{subsection.8.1}%
-\contentsline {section}{\numberline {9}Other Algorithms}{15}{section.9}%
+\contentsline {subsection}{\numberline {8.1}Point location}{15}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Point in polygon}{15}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}Convex hull}{16}{subsection.8.3}%
