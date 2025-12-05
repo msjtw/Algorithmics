@@ -28,4 +28,5 @@ rustlings/
 *.svn
 *.toc
 *.ods#
+gdb
 
