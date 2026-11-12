@@ -1,48 +1,35 @@
 #include <vector>
+#include <iostream>
 
 using namespace std;
 
-const int INF = 1e9 + 8;
-
 class Solution {
   public:
-    vector<int> hold;
-    vector<int> height;
+    vector<int> left;
+    vector<int> right;
+
     int n;
 
-    int dp(int pos) {
-        if (hold[pos] > -1) {
-            return hold[pos];
-        }
+    
 
-        int res = INF;
-        if (pos == n - 1) {
-            return height[pos];
-        } else {
-            if (pos > 0) {
-                res = min(res, dp(pos - 1));
-            }
-            if (pos < n - 1) {
-                res = min(res, dp(pos + 1));
-            }
-        }
-
-        res = max(res, height[pos]);
-        hold[pos] = res;
-        return res;
-    }
-
-    int trap(vector<int> &_height) {
-        height = _height;
+    int trap(vector<int> &height) {
         n = height.size();
 
-        hold.assign(n, -1);
+        left.assign(n, 0);
+        right.assign(n, 0);
 
-        dp(0);
+        left[0] = height[0];
+        for(int i = 1; i < n; i++){
+            left[i] = max(left[i-1], height[i]);
+        }
+        right[n-1] = height[n-1];
+        for(int i = n-2; i >= 0; i--){
+            right[i] = max(right[i+1], height[i]);
+        }
 
         int res = 0;
         for (int i = 0; i < n; i++) {
-            res += max(0, hold[i] - height[i]);
+            res += min(left[i],right[i]) - height[i];
         }
 
         return res;
